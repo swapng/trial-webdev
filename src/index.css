@@ -72,26 +72,26 @@
 
 @layer base {
   :root {
-    --background: hsl(255 40% 98%);
-    --foreground: hsl(255 48% 14%);
+    --background: hsl(255 35% 97.4%);
+    --foreground: hsl(255 48% 12%);
     --card: hsl(0 0% 100%);
-    --card-foreground: hsl(255 48% 14%);
+    --card-foreground: hsl(255 48% 12%);
     --popover: hsl(0 0% 100%);
-    --popover-foreground: hsl(255 48% 14%);
+    --popover-foreground: hsl(255 48% 12%);
     --primary: hsl(255 48% 14%);
-    --primary-foreground: hsl(45 75% 95%);
-    --secondary: hsl(45 75% 50%);
-    --secondary-foreground: hsl(255 48% 14%);
+    --primary-foreground: hsl(45 75% 98%);
+    --secondary: hsl(45 71% 45%);
+    --secondary-foreground: hsl(255 48% 12%);
     --muted: hsl(255 10% 94%);
     --muted-foreground: hsl(255 20% 40%);
-    --accent: hsl(45 75% 50%);
-    --accent-foreground: hsl(255 48% 14%);
+    --accent: hsl(45 71% 45%);
+    --accent-foreground: hsl(255 48% 12%);
     --destructive: hsl(0 84.2% 60.2%);
     --destructive-foreground: hsl(210 40% 98%);
-    --border: hsl(255 20% 90%);
-    --input: hsl(255 20% 90%);
-    --ring: hsl(45 75% 50%);
-    --radius: 0.75rem;
+    --border: hsl(255 15% 91%);
+    --input: hsl(255 15% 91%);
+    --ring: hsl(45 71% 45%);
+    --radius: 0.5rem;
   }
   .dark {
     --background: hsl(224 71.4% 4.1%);

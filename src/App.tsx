@@ -93,9 +93,9 @@ const PROCESS_STEPS = [
 const BramhaasLogo = ({ className = "w-10 h-10" }: { className?: string }) => (
   <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
     <ellipse cx="50" cy="55" rx="40" ry="25" stroke="currentColor" strokeWidth="3" transform="rotate(-15 50 55)" />
-    <line x1="50" y1="10" x2="50" y2="90" stroke="currentColor" strokeWidth="3" />
-    <line x1="35" y1="25" x2="65" y2="25" stroke="#C5A028" strokeWidth="3" />
-    <rect x="46" y="51" width="8" height="8" transform="rotate(45 50 55)" fill="#C5A028" />
+    <line x1="50" y1="10" x2="50" y2="90" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+    <line x1="32" y1="25" x2="68" y2="25" stroke="var(--secondary)" strokeWidth="4" strokeLinecap="round" />
+    <rect x="46" y="51" width="8" height="8" transform="rotate(45 50 55)" fill="var(--secondary)" />
   </svg>
 );
 
@@ -126,13 +126,13 @@ export default function App() {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-secondary/30">
       {/* Navigation */}
-      <nav id="navbar" className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-background/90 backdrop-blur-md border-b py-3 shadow-sm' : 'bg-transparent py-5'}`}>
+      <nav id="navbar" className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-background/95 backdrop-blur-md border-b py-3 shadow-md' : 'bg-transparent py-6'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <BramhaasLogo className="w-10 h-10 text-primary" />
+          <div className="flex items-center gap-4 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <BramhaasLogo className="w-12 h-12 text-primary transition-transform group-hover:scale-105" />
             <div className="flex flex-col leading-none">
               <span className="font-display font-bold text-2xl tracking-tighter text-primary">BRAMHAAS</span>
-              <span className="text-[10px] uppercase tracking-[0.4em] font-bold opacity-60">TECH</span>
+              <span className="text-[10px] uppercase tracking-[0.5em] font-black text-secondary">TECH</span>
             </div>
           </div>
 
@@ -185,7 +185,7 @@ export default function App() {
 
       <main>
         {/* Hero Section */}
-        <section className="relative pt-40 pb-24 md:pt-60 md:pb-40 overflow-hidden bg-[radial-gradient(circle_at_top_right,#C5A02808,transparent_50%)]">
+        <section className="relative pt-40 pb-24 md:pt-60 md:pb-40 overflow-hidden bg-[radial-gradient(circle_at_top_right,theme(colors.secondary/0.05),transparent_50%)]">
           <div className="container mx-auto px-6 relative z-10">
             <div className="max-w-4xl">
               <motion.div
