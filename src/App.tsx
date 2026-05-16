@@ -66,7 +66,7 @@ export default function App() {
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-background/95 backdrop-blur-md border-b py-3 shadow-md' : 'bg-transparent py-6'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
           <div className="flex items-center gap-4 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <BramhaasLogo className="w-10 h-12 transition-transform group-hover:scale-105" />
+            <BramhaasLogo className="w-8 h-10 transition-transform group-hover:scale-105" />
             <div className="flex flex-col leading-none">
               <span className="font-display font-bold text-2xl tracking-tighter text-primary">BRAMHAAS</span>
               <span className="text-[10px] uppercase tracking-[0.5em] font-black text-secondary">TECH</span>
@@ -125,7 +125,7 @@ export default function App() {
               </motion.div>
             </div>
           </div>
-          <div className="absolute right-[-80px] top-1/2 -translate-y-1/2 select-none pointer-events-none hidden lg:block w-[600px] h-[700px]" style={{ backgroundImage: "url('/assets/mark_light.png')", backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', opacity: 0.07, filter: 'grayscale(100%)'}}/>
+          <div className="absolute right-[0px] top-1/2 -translate-y-1/2 select-none pointer-events-none hidden lg:block w-[500px] h-[580px]" style={{ backgroundImage: "url('/assets/mark_light.png')", backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', opacity: 0.09, filter: 'grayscale(100%)'}}/>
         </section>
 
         {/* Brand Band */}
