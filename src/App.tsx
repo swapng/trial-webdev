@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Cpu, BrainCircuit, Server, ChevronRight,
@@ -14,7 +15,7 @@ const SERVICES = [
   { title:"Embedded Systems", description:"Rigorous firmware development and hardware-software integration for specialized IoT and industrial deployments.", icon:<Cpu className="w-7 h-7"/>, features:["RTOS Implementation","Bare Metal Dev","FPGA Integration","System Security"] },
   { title:"AI & Machine Learning", description:"Developing efficient algorithms that transform raw industrial data into predictive operational insights.", icon:<BrainCircuit className="w-7 h-7"/>, features:["Edge Intelligence","Visual Inspection","Condition Monitoring","Signal Processing"] },
   { title:"Hardware Design", description:"Technical PCB engineering for high-performance systems requiring extreme reliability and efficiency.", icon:<Microchip className="w-7 h-7"/>, features:["High-Speed Design","Design for Mfg","Power Mgmt","EMI Shielding"] },
-  { title:"IT Services", description:"Managing technical infrastructure for organisations focusing on security, resilience, and scale.", icon:<Server className="w-7 h-7"/>, features:["Secure Cloud","Network Ops","Infrastructure","DevOps Systems"] }
+  { title:"IT Engineering", description:"Engineering the infrastructure that organisations depend on. Security, resilience, scale.", icon:<Server className="w-7 h-7"/>, features:["Secure Cloud","Network Ops","Infrastructure","DevOps Systems"] }
 ];
 
 const NAV_LINKS = [
@@ -26,10 +27,10 @@ const NAV_LINKS = [
 ];
 
 const PROCESS_STEPS = [
-  { step:"01", title:"Audit & Analysis", description:"Deep technical assessment of hurdles and design feasibility for modern hardware systems." },
-  { step:"02", title:"Architecture Design", description:"Drafting the blueprint for systems that integrate AI logic with embedded hardware interfaces." },
-  { step:"03", title:"Core Engineering", description:"The execution phase where high-level software meets low-level hardware constraints." },
-  { step:"04", title:"Validation Cycle", description:"Stress testing across environmental and data-driven parameters to ensure deployment success." }
+  { step:"01", title:"Audit & Analysis", description:"Deep technical assessment of the problem — before a single line is written." },
+  { step:"02", title:"Architecture Design", description:"The blueprint comes before the build. Always." },
+  { step:"03", title:"Core Engineering", description:"Where high-level thinking meets low-level precision." },
+  { step:"04", title:"Validation Cycle", description:"We don't ship until we're certain. Then we validate again." }
 ];
 
 // Logo — uses actual PNG, never recreated
@@ -48,6 +49,8 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
@@ -57,15 +60,28 @@ export default function App() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formRef.current) return;
     setSubmitting(true);
-    setTimeout(() => { setSubmitting(false); setSubmitted(true); }, 1500);
+    setSubmitError(false);
+    emailjs.sendForm(
+      'service_2811ess',
+      'template_6mumyoi',
+      formRef.current,
+      '1hiYjP_bJqDX2_RVr'
+    ).then(() => {
+      setSubmitting(false);
+      setSubmitted(true);
+    }).catch(() => {
+      setSubmitting(false);
+      setSubmitError(true);
+    });
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa] text-foreground font-sans">
+    <div className="min-h-screen bg-[#f9f8f6] text-foreground font-sans">
 
       {/* ── NAVIGATION ── */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-[#fafafa]/95 backdrop-blur-md border-b border-[#ececec] py-4 shadow-sm' : 'bg-transparent py-7'}`}>
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-[#f9f8f6]/95 backdrop-blur-md border-b border-[#ececec] py-4 shadow-sm' : 'bg-transparent py-7'}`}>
         <div className="max-w-7xl mx-auto px-8 flex justify-between items-center">
           <a href="#" className="flex items-center gap-3 group" onClick={() => window.scrollTo({top:0,behavior:'smooth'})}>
             <Logo size={34} />
@@ -82,7 +98,7 @@ export default function App() {
               </a>
             ))}
             <a href="#contact"
-              className="text-[10px] font-bold tracking-[3px] uppercase bg-[#1a0d2e] text-[#fafafa] px-6 py-3 hover:bg-[#d4a017] hover:text-[#1a0d2e] transition-all duration-300">
+              className="text-[10px] font-bold tracking-[3px] uppercase bg-[#1a0d2e] text-[#f9f8f6] px-6 py-3 hover:bg-[#d4a017] hover:text-[#1a0d2e] transition-all duration-300">
               Inquire
             </a>
           </div>
@@ -96,13 +112,13 @@ export default function App() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div initial={{opacity:0,x:'100%'}} animate={{opacity:1,x:0}} exit={{opacity:0,x:'100%'}}
-            className="fixed inset-0 z-40 bg-[#fafafa] pt-24 px-8 md:hidden flex flex-col gap-8">
+            className="fixed inset-0 z-40 bg-[#f9f8f6] pt-24 px-8 md:hidden flex flex-col gap-8">
             {NAV_LINKS.map(l => (
               <a key={l.name} href={l.href}
                 className="text-3xl font-black tracking-tight text-[#1a0d2e] border-b border-[#ececec] pb-6"
                 onClick={() => setMenuOpen(false)}>{l.name}</a>
             ))}
-            <a href="#contact" className="bg-[#1a0d2e] text-[#fafafa] text-center py-5 text-sm font-bold tracking-widest uppercase" onClick={() => setMenuOpen(false)}>Get in Touch</a>
+            <a href="#contact" className="bg-[#1a0d2e] text-[#f9f8f6] text-center py-5 text-sm font-bold tracking-widest uppercase" onClick={() => setMenuOpen(false)}>Get in Touch</a>
           </motion.div>
         )}
       </AnimatePresence>
@@ -112,7 +128,7 @@ export default function App() {
         {/* ══════════════════════════════════════════
             HERO — Apple calm, balanced composition
         ══════════════════════════════════════════ */}
-        <section className="min-h-screen flex items-center bg-[#fafafa] relative overflow-hidden">
+        <section className="min-h-screen flex items-center bg-[#f9f8f6] relative overflow-hidden">
 
           {/* Very subtle top border accent */}
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#d4a017] to-transparent opacity-40"/>
@@ -132,10 +148,10 @@ export default function App() {
                   <span className="font-semibold">innovation.</span>
                 </h1>
                 <p className="text-[15px] text-[#6b6082] leading-[1.9] font-light max-w-md mb-12">
-                  A high-precision engineering company delivering rigorous solutions across Embedded Systems, AI/ML, Hardware Design, and IT Services.
+                  Where rigorous engineering meets real-world problems. Built for what matters — not what is easy.
                 </p>
                 <div className="flex items-center gap-0">
-                  <a href="#contact" className="bg-[#1a0d2e] text-[#fafafa] px-8 py-4 text-[10px] font-bold tracking-[3px] uppercase hover:bg-[#d4a017] hover:text-[#1a0d2e] transition-all duration-300 flex items-center gap-3">
+                  <a href="#contact" className="bg-[#1a0d2e] text-[#f9f8f6] px-8 py-4 text-[10px] font-bold tracking-[3px] uppercase hover:bg-[#d4a017] hover:text-[#1a0d2e] transition-all duration-300 flex items-center gap-3">
                     Start a Collaboration <ArrowRight size={14}/>
                   </a>
                   <a href="#services" className="px-8 py-4 text-[10px] font-bold tracking-[3px] uppercase text-[#1a0d2e] hover:text-[#d4a017] transition-colors duration-300">
@@ -154,16 +170,12 @@ export default function App() {
               <motion.div
                 initial={{opacity:0,scale:0.95}} animate={{opacity:1,scale:1}}
                 transition={{duration:1.1,ease:[0.25,0.46,0.45,0.94],delay:0.2}}
-                className="flex items-center justify-center lg:justify-end">
-                <div className="relative">
-                  <img
+                className="flex items-center justify-center">
+                <img
                     src="/assets/mark_light.png"
                     alt="Bramhaas Tech"
-                    className="w-[320px] h-[320px] object-contain opacity-90"
+                    className="w-[460px] h-[460px] object-contain opacity-95"
                   />
-                  {/* Subtle glow behind mark */}
-                  <div className="absolute inset-0 bg-[#d4a017] opacity-[0.04] rounded-full blur-3xl scale-150 -z-10"/>
-                </div>
               </motion.div>
 
             </div>
@@ -195,7 +207,7 @@ export default function App() {
         {/* ══════════════════════════════════════════
             CAPABILITY
         ══════════════════════════════════════════ */}
-        <section id="services" className="py-32 bg-[#fafafa] scroll-mt-20">
+        <section id="services" className="py-32 bg-[#f9f8f6] scroll-mt-20">
           <div className="max-w-7xl mx-auto px-8">
             <div className="mb-20">
               <div className="flex items-center gap-3 mb-6">
@@ -211,9 +223,9 @@ export default function App() {
                 <motion.div key={s.title}
                   initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}}
                   transition={{delay:i*0.1}} viewport={{once:true}}
-                  className="bg-[#fafafa] p-10 group hover:bg-[#1a0d2e] transition-all duration-500 cursor-default">
+                  className="bg-[#f9f8f6] p-10 group hover:bg-[#1a0d2e] transition-all duration-500 cursor-default">
                   <div className="mb-8 text-[#1a0d2e] group-hover:text-[#d4a017] transition-colors duration-500">{s.icon}</div>
-                  <h3 className="text-[17px] font-bold text-[#1a0d2e] group-hover:text-[#fafafa] transition-colors duration-500 mb-4 leading-tight">{s.title}</h3>
+                  <h3 className="text-[17px] font-bold text-[#1a0d2e] group-hover:text-[#f9f8f6] transition-colors duration-500 mb-4 leading-tight">{s.title}</h3>
                   <p className="text-[13px] text-[#9e96b8] group-hover:text-[#9e96b8] leading-relaxed mb-8">{s.description}</p>
                   <div className="h-[1px] bg-[#ececec] group-hover:bg-white/10 mb-6 transition-colors duration-500"/>
                   <ul className="space-y-2">
@@ -232,7 +244,7 @@ export default function App() {
         {/* ══════════════════════════════════════════
             EXPERTISE
         ══════════════════════════════════════════ */}
-        <section id="expertise" className="py-32 bg-[#f5f3ef] scroll-mt-20">
+        <section id="expertise" className="py-32 bg-[#e8e6f2] scroll-mt-20">
           <div className="max-w-7xl mx-auto px-8">
             <div className="grid lg:grid-cols-2 gap-24 items-center">
               <div>
@@ -273,8 +285,8 @@ export default function App() {
                   { icon:<Code2 className="w-5 h-5 text-[#d4a017]"/>, title:'Rigorous', sub:'Architectures', offset:false },
                 ].map((item, i) => (
                   <div key={item.title}
-                    className={`bg-[#fafafa] p-10 flex flex-col items-center justify-center text-center ${item.offset ? 'translate-y-4' : ''}`}>
-                    <div className="w-11 h-11 bg-[#f5f3ef] rounded-full flex items-center justify-center mb-5">{item.icon}</div>
+                    className={`bg-[#f9f8f6] p-10 flex flex-col items-center justify-center text-center ${item.offset ? 'translate-y-4' : ''}`}>
+                    <div className="w-11 h-11 bg-[#e8e6f2] rounded-full flex items-center justify-center mb-5">{item.icon}</div>
                     <div className="text-[11px] font-bold tracking-widest text-[#1a0d2e] uppercase mb-1">{item.title}</div>
                     <div className="text-[10px] text-[#aaa] uppercase tracking-wider">{item.sub}</div>
                   </div>
@@ -287,7 +299,7 @@ export default function App() {
         {/* ══════════════════════════════════════════
             WORKFLOW
         ══════════════════════════════════════════ */}
-        <section id="process" className="py-32 bg-[#fafafa] scroll-mt-20">
+        <section id="process" className="py-32 bg-[#f9f8f6] scroll-mt-20">
           <div className="max-w-7xl mx-auto px-8">
             <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
               <div>
@@ -308,7 +320,7 @@ export default function App() {
                 <motion.div key={step.step}
                   initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}}
                   transition={{delay:i*0.1}} viewport={{once:true}}
-                  className="bg-[#fafafa] p-10 group hover:bg-[#f5f3ef] transition-all duration-300">
+                  className="bg-[#f9f8f6] p-10 group hover:bg-[#e8e6f2] transition-all duration-300">
                   <div style={{fontFamily:'Georgia,serif'}} className="text-[72px] font-light text-[#ececec] group-hover:text-[#e8e4dc] leading-none mb-6 transition-colors duration-300">{step.step}</div>
                   <div className="w-6 h-[2px] bg-[#d4a017] mb-5"/>
                   <h3 className="text-[13px] font-bold uppercase tracking-widest text-[#1a0d2e] mb-4">{step.title}</h3>
@@ -339,11 +351,11 @@ export default function App() {
                   <div className="w-6 h-[1px] bg-[#d4a017]"/>
                   <span className="text-[9px] font-bold tracking-[5px] text-[#d4a017] uppercase">Vision</span>
                 </div>
-                <h2 style={{fontFamily:'Georgia,serif'}} className="text-[48px] font-light text-[#fafafa] leading-tight tracking-tight mb-10">
+                <h2 style={{fontFamily:'Georgia,serif'}} className="text-[48px] font-light text-[#f9f8f6] leading-tight tracking-tight mb-10">
                   Built to last,<br/>engineered to <em style={{fontStyle:'italic',opacity:0.5}}>evolve.</em>
                 </h2>
                 <div className="space-y-6 text-[15px] text-white/60 font-light leading-[1.9]">
-                  <p>Bramhaas Tech was founded on a single conviction — that India has the engineering depth to build technology the world depends on. Not services. Not outsourcing. Real, original engineering.</p>
+                  <p>Bramhaas Tech was founded on a single conviction — that India has the engineering depth to build technology the world depends on. Not services. Not outsourcing. Real engineering.</p>
                   <p>We are not defined by a single domain. We follow the problem, not the industry.</p>
                   <p>Every decision we make is measured against one question: will we be proud of this in 20 years?</p>
                 </div>
@@ -359,10 +371,48 @@ export default function App() {
           </div>
         </section>
 
+
+        {/* ══════════════════════════════════════════
+            TRUST — Numbers + Philosophy
+        ══════════════════════════════════════════ */}
+        <section className="py-32 bg-[#1a0d2e] scroll-mt-20">
+          <div className="max-w-7xl mx-auto px-8">
+
+            {/* Numbers row */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-white/5 mb-24">
+              {[
+                { num:'10+', label:'Years of combined engineering experience' },
+                { num:'∀', label:'Every problem we take on, we own completely', small:true },
+                { num:'1', label:'Standard of work. World class or nothing.' },
+              ].map((item) => (
+                <div key={item.num} className="bg-[#1a0d2e] p-10 text-center">
+                  <div style={{fontFamily:'Georgia,serif'}} className={`font-light text-[#d4a017] leading-none mb-4 ${'small' in item && item.small ? 'text-[44px]' : 'text-[64px]'}`}>{item.num}</div>
+                  <p className="text-[11px] text-white/40 leading-relaxed font-light uppercase tracking-wider">{item.label}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Philosophy statements */}
+            <div className="grid md:grid-cols-3 gap-[1px] bg-white/5">
+              {[
+                { title:'Depth over breadth.', body:'When we take a project, we go deep. Into the problem, the architecture, the edge cases. You get engineers who think, not just people who execute.' },
+                { title:'We say what we mean.', body:'If a project is not feasible the way you have imagined it, we will say so — and offer a better path. Honesty is not a policy here. It is how we work.' },
+                { title:'Built for generations.', body:'Every decision we make is measured against a simple question: will we be proud of this in 20 years? If the answer is no, we do not do it.' },
+              ].map((item) => (
+                <div key={item.title} className="bg-[#1a0d2e] p-12 border-t-2 border-[#d4a017]">
+                  <h3 style={{fontFamily:'Georgia,serif'}} className="text-[22px] font-light text-[#fafafa] mb-5 leading-tight italic">{item.title}</h3>
+                  <p className="text-[13px] text-white/45 leading-[1.9] font-light">{item.body}</p>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </section>
+
         {/* ══════════════════════════════════════════
             CONTACT
         ══════════════════════════════════════════ */}
-        <section id="contact" className="py-32 bg-[#fafafa] scroll-mt-20">
+        <section id="contact" className="py-32 bg-[#f9f8f6] scroll-mt-20">
           <div className="max-w-7xl mx-auto px-8">
             <div className="grid lg:grid-cols-2 gap-24">
               <div>
@@ -371,10 +421,10 @@ export default function App() {
                   <span className="text-[9px] font-bold tracking-[5px] text-[#d4a017] uppercase">Contact</span>
                 </div>
                 <h2 style={{fontFamily:'Georgia,serif'}} className="text-[52px] font-light text-[#1a0d2e] leading-tight tracking-tight mb-6">
-                  Let's build<br/>something<br/><em style={{fontStyle:'italic',color:'#d4a017'}}>extraordinary.</em>
+                  Bring us a<br/>hard <em style={{fontStyle:'italic',color:'#d4a017'}}>problem.</em>
                 </h2>
                 <p className="text-[15px] text-[#6b6082] font-light leading-[1.9] max-w-sm mb-14">
-                  Tell us what you're working on. We'll tell you if and how we can help — honestly.
+                  Tell us what you're trying to solve. We'll tell you honestly if and how we can help.
                 </p>
                 <div className="space-y-8">
                   <div className="flex items-start gap-5 border-b border-[#ececec] pb-8">
@@ -394,25 +444,25 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="bg-[#f5f3ef] p-12">
+              <div className="bg-[#e8e6f2] p-12">
                 <AnimatePresence mode="wait">
                   {submitted ? (
                     <motion.div initial={{opacity:0}} animate={{opacity:1}} className="h-full flex flex-col items-center justify-center text-center py-16">
                       <CheckCircle2 className="w-14 h-14 text-[#d4a017] mb-8"/>
                       <h3 style={{fontFamily:'Georgia,serif'}} className="text-[28px] font-light text-[#1a0d2e] mb-4">Message received.</h3>
                       <p className="text-[14px] text-[#6b6082] mb-10 font-light">We will respond within one business day.</p>
-                      <button className="text-[10px] font-bold tracking-[3px] uppercase border border-[#1a0d2e] px-6 py-3 text-[#1a0d2e] hover:bg-[#1a0d2e] hover:text-[#fafafa] transition-all" onClick={() => setSubmitted(false)}>
+                      <button className="text-[10px] font-bold tracking-[3px] uppercase border border-[#1a0d2e] px-6 py-3 text-[#1a0d2e] hover:bg-[#1a0d2e] hover:text-[#f9f8f6] transition-all" onClick={() => setSubmitted(false)}>
                         Send Another
                       </button>
                     </motion.div>
                   ) : (
                     <motion.div initial={{opacity:0}} animate={{opacity:1}}>
-                      <h3 className="text-[10px] font-bold tracking-[4px] uppercase text-[#1a0d2e] mb-10">Project Brief</h3>
-                      <form className="space-y-7" onSubmit={handleSubmit}>
+                      <h3 className="text-[10px] font-bold tracking-[4px] uppercase text-[#0f172a] mb-10">Start a Conversation</h3>
+                      <form ref={formRef} className="space-y-7" onSubmit={handleSubmit}>
                         <div className="grid grid-cols-2 gap-6">
                           <div>
                             <label className="text-[9px] font-bold tracking-[3px] uppercase text-[#9e96b8] block mb-2">First Name</label>
-                            <input required className="w-full bg-transparent border-b border-[#d8d4e0] py-3 text-[14px] text-[#1a0d2e] outline-none focus:border-[#d4a017] transition-colors placeholder:text-[#ccc]" placeholder="—"/>
+                            <input required className="w-full bg-transparent border-b border-[#d8d4e0] py-3 text-[14px] text-[#1a0d2e] outline-none focus:border-[#d4a017] transition-colors placeholder:text-[#ccc]" name="first_name" placeholder="—"/>
                           </div>
                           <div>
                             <label className="text-[9px] font-bold tracking-[3px] uppercase text-[#9e96b8] block mb-2">Last Name</label>
@@ -421,25 +471,29 @@ export default function App() {
                         </div>
                         <div>
                           <label className="text-[9px] font-bold tracking-[3px] uppercase text-[#9e96b8] block mb-2">Work Email</label>
-                          <input required type="email" className="w-full bg-transparent border-b border-[#d8d4e0] py-3 text-[14px] text-[#1a0d2e] outline-none focus:border-[#d4a017] transition-colors placeholder:text-[#ccc]" placeholder="—"/>
+                          <input required type="email" name="user_email" className="w-full bg-transparent border-b border-[#d8d4e0] py-3 text-[14px] text-[#1a0d2e] outline-none focus:border-[#d4a017] transition-colors placeholder:text-[#ccc]" placeholder="—"/>
                         </div>
                         <div>
                           <label className="text-[9px] font-bold tracking-[3px] uppercase text-[#9e96b8] block mb-2">Domain</label>
                           <select className="w-full bg-transparent border-b border-[#d8d4e0] py-3 text-[14px] text-[#1a0d2e] outline-none focus:border-[#d4a017] transition-colors appearance-none">
+                            <select name="domain">
                             <option>Embedded Systems</option>
                             <option>AI / ML</option>
                             <option>Hardware Design</option>
-                            <option>IT Services</option>
+                            <option>IT Engineering</option>
                           </select>
                         </div>
                         <div>
                           <label className="text-[9px] font-bold tracking-[3px] uppercase text-[#9e96b8] block mb-2">Your Brief</label>
-                          <textarea required rows={4} className="w-full bg-transparent border-b border-[#d8d4e0] py-3 text-[14px] text-[#1a0d2e] outline-none focus:border-[#d4a017] transition-colors resize-none placeholder:text-[#ccc]" placeholder="—"/>
+                          <textarea required rows={4} className="w-full bg-transparent border-b border-[#d8d4e0] py-3 text-[14px] text-[#1a0d2e] outline-none focus:border-[#d4a017] transition-colors resize-none placeholder:text-[#ccc]" name="message" placeholder="—"/>
                         </div>
                         <button type="submit" disabled={submitting}
-                          className="w-full bg-[#1a0d2e] text-[#fafafa] py-5 text-[10px] font-bold tracking-[4px] uppercase hover:bg-[#d4a017] hover:text-[#1a0d2e] transition-all duration-300 disabled:opacity-60">
-                          {submitting ? 'Sending...' : 'Submit Brief'}
+                          className="w-full bg-[#1a0d2e] text-[#f9f8f6] py-5 text-[10px] font-bold tracking-[4px] uppercase hover:bg-[#d4a017] hover:text-[#1a0d2e] transition-all duration-300 disabled:opacity-60">
+                          {submitting ? 'Sending...' : 'Send Message'}
                         </button>
+                        {submitError && (
+                          <p className="text-[11px] text-red-500 text-center mt-4">Something went wrong. Please email us directly at contact@bramhaastech.com</p>
+                        )}
                       </form>
                     </motion.div>
                   )}
