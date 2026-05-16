@@ -125,9 +125,7 @@ export default function App() {
               </motion.div>
             </div>
           </div>
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-[0.03] select-none pointer-events-none hidden lg:block">
-            <BramhaasLogo className="w-[700px] h-[840px]" />
-          </div>
+          <div className="absolute right-[-80px] top-1/2 -translate-y-1/2 select-none pointer-events-none hidden lg:block w-[600px] h-[700px]" style={{ backgroundImage: "url('/assets/mark_light.png')", backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', opacity: 0.07, filter: 'grayscale(100%)'}}/>
         </section>
 
         {/* Brand Band */}
