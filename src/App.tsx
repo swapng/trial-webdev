@@ -32,67 +32,15 @@ const PROCESS_STEPS = [
   { step:"04", title:"Validation Cycle", description:"Stress testing across environmental and data-driven parameters to ensure deployment success." }
 ];
 
-// SVG Logo Mark — matches finalised design
-const BramhaasLogo = ({ className = "w-10 h-10", darkBg = false }: { className?: string; darkBg?: boolean }) => {
-  const fg = darkBg ? '#e8e4f0' : '#1a0d2e';
-  const accent = '#d4a017';
-  const bg = darkBg ? '#1a0d2e' : '#f0eef8';
-  return (
-    <svg viewBox="0 0 100 120" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Broken orbit ring */}
-      <g transform="rotate(-22 50 60)">
-        <ellipse cx="50" cy="60" rx="36" ry="20" stroke={fg} strokeWidth="4.5" fill="none"/>
-        <rect x="39" y="32" width="22" height="14" fill={bg}/>
-        <rect x="39" y="74" width="22" height="14" fill={bg}/>
-      </g>
-      {/* Top lance */}
-      <line x1="50" y1="5" x2="50" y2="44" stroke={fg} strokeWidth="4.5" strokeLinecap="square"/>
-      {/* Gold crossbar */}
-      <line x1="33" y1="22" x2="67" y2="22" stroke={accent} strokeWidth="4.5" strokeLinecap="square"/>
-      {/* Bottom anchor */}
-      <line x1="50" y1="76" x2="50" y2="95" stroke={fg} strokeWidth="4.5" strokeLinecap="square"/>
-      {/* Diamond — gold */}
-      <rect x="42" y="52" width="16" height="16" transform="rotate(45 50 60)" fill={accent}/>
-      {/* Diamond cutout */}
-      <rect x="46" y="56" width="8" height="8" transform="rotate(45 50 60)" fill={bg}/>
-    </svg>
-  );
-};
-
-// Favicon generator — dark background so mark is always visible
-const FaviconGenerator = () => {
-  useEffect(() => {
-    const canvas = document.createElement('canvas');
-    canvas.width = 64; canvas.height = 64;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    ctx.fillStyle = '#1a0d2e';
-    ctx.fillRect(0, 0, 64, 64);
-    const cx = 32, cy = 34;
-    const fg = '#e8e4f0', accent = '#d4a017', bg = '#1a0d2e';
-    ctx.save(); ctx.translate(cx, cy);
-    ctx.save(); ctx.rotate(-22 * Math.PI / 180);
-    ctx.beginPath(); ctx.ellipse(0, 0, 18, 10, 0, 0, Math.PI*2);
-    ctx.strokeStyle = fg; ctx.lineWidth = 3; ctx.stroke();
-    ctx.fillStyle = bg; ctx.fillRect(-6,-17,12,9); ctx.fillRect(-6,9,12,9);
-    ctx.restore();
-    ctx.beginPath(); ctx.moveTo(0,-28); ctx.lineTo(0,-10);
-    ctx.strokeStyle = fg; ctx.lineWidth = 3; ctx.lineCap='square'; ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(-9,-20); ctx.lineTo(9,-20);
-    ctx.strokeStyle = accent; ctx.lineWidth = 3; ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(0,10); ctx.lineTo(0,22);
-    ctx.strokeStyle = fg; ctx.lineWidth = 3; ctx.stroke();
-    ctx.save(); ctx.rotate(45*Math.PI/180);
-    ctx.fillStyle = accent; ctx.fillRect(-5,-5,10,10);
-    ctx.fillStyle = bg; ctx.fillRect(-2.5,-2.5,5,5);
-    ctx.restore(); ctx.restore();
-    const link: HTMLLinkElement = document.querySelector("link[rel~='icon']") || document.createElement('link');
-    link.type = 'image/png'; link.rel = 'shortcut icon';
-    link.href = canvas.toDataURL('image/png');
-    document.head.appendChild(link);
-  }, []);
-  return null;
-};
+// Real PNG logo mark — uses actual finalised logo files
+const BramhaasLogo = ({ className = "w-10 h-10", darkBg = false }: { className?: string; darkBg?: boolean }) => (
+  <img
+    src={darkBg ? '/assets/mark_dark.png' : '/assets/mark_light.png'}
+    alt="Bramhaas Tech Mark"
+    className={className}
+    style={{ objectFit: 'contain' }}
+  />
+);
 
 export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -113,7 +61,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-secondary/30">
-      <FaviconGenerator />
 
       {/* Navigation */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-background/95 backdrop-blur-md border-b py-3 shadow-md' : 'bg-transparent py-6'}`}>
