@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Cpu, BrainCircuit, Server, ChevronRight,
@@ -32,14 +32,39 @@ const PROCESS_STEPS = [
   { step:"04", title:"Validation Cycle", description:"Stress testing across environmental and data-driven parameters to ensure deployment success." }
 ];
 
-// Real PNG logo mark — uses actual finalised logo files
-const BramhaasLogo = ({ className = "w-10 h-10", darkBg = false }: { className?: string; darkBg?: boolean }) => (
-  <img
-    src={darkBg ? '/assets/mark_dark.png' : '/assets/mark_light.png'}
-    alt="Bramhaas Tech Mark"
-    className={className}
-    style={{ objectFit: 'contain' }}
-  />
+// ────────────────────────────────────────────────────────
+// FINAL LOGO MARK — pure inline SVG, scales perfectly
+// Single source of truth for the mark across the site
+// ────────────────────────────────────────────────────────
+const BramhaasMark = ({ 
+  className = "", 
+  fg = "#1a0d2e", 
+  bg = "#f0eef8",
+  accent = "#d4a017" 
+}: { 
+  className?: string; 
+  fg?: string; 
+  bg?: string; 
+  accent?: string;
+}) => (
+  <svg viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg" className={className} fill="none">
+    {/* Tilted orbit ellipse */}
+    <ellipse 
+      cx="50" cy="63" rx="34" ry="20" 
+      transform="rotate(-18 50 63)"
+      stroke={fg} strokeWidth="3" fill="none"
+    />
+    {/* Top lance */}
+    <line x1="50" y1="6" x2="50" y2="44" stroke={fg} strokeWidth="3" strokeLinecap="square"/>
+    {/* Gold crossbar */}
+    <line x1="34" y1="22" x2="66" y2="22" stroke={accent} strokeWidth="4" strokeLinecap="square"/>
+    {/* Bottom anchor */}
+    <line x1="50" y1="65" x2="50" y2="97" stroke={fg} strokeWidth="3" strokeLinecap="square"/>
+    {/* Gold diamond at center */}
+    <rect x="44" y="57" width="12" height="12" transform="rotate(45 50 63)" fill={accent}/>
+    {/* Diamond cutout */}
+    <rect x="47" y="60" width="6" height="6" transform="rotate(45 50 63)" fill={bg}/>
+  </svg>
 );
 
 export default function App() {
@@ -65,8 +90,8 @@ export default function App() {
       {/* Navigation */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-background/95 backdrop-blur-md border-b py-3 shadow-md' : 'bg-transparent py-6'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center gap-4 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <BramhaasLogo className="w-8 h-10 transition-transform group-hover:scale-105" />
+          <div className="flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <BramhaasMark className="w-9 h-11 transition-transform group-hover:scale-105" fg="#1a0d2e" bg="#f0eef8" />
             <div className="flex flex-col leading-none">
               <span className="font-display font-bold text-2xl tracking-tighter text-primary">BRAMHAAS</span>
               <span className="text-[10px] uppercase tracking-[0.5em] font-black text-secondary">TECH</span>
@@ -125,7 +150,10 @@ export default function App() {
               </motion.div>
             </div>
           </div>
-          <div className="absolute right-[0px] top-1/2 -translate-y-1/2 select-none pointer-events-none hidden lg:block w-[500px] h-[580px]" style={{ backgroundImage: "url('/assets/mark_light.png')", backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', opacity: 0.09, filter: 'grayscale(100%)'}}/>
+          {/* Hero watermark — same SVG, just much larger and faded */}
+          <div className="absolute right-[-40px] top-1/2 -translate-y-1/2 select-none pointer-events-none hidden lg:block opacity-[0.06]">
+            <BramhaasMark className="w-[480px] h-[560px]" fg="#1a0d2e" bg="transparent" />
+          </div>
         </section>
 
         {/* Brand Band */}
@@ -267,7 +295,7 @@ export default function App() {
                   <p>Every decision we make is measured against one question: will we be proud of this in 20 years?</p>
                 </div>
                 <div className="pt-12 flex items-center gap-6">
-                  <BramhaasLogo className="w-14 h-16 opacity-60" darkBg={true} />
+                  <BramhaasMark className="w-12 h-14 opacity-60" fg="#e8e4f0" bg="#1a0d2e" />
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.3em] text-secondary">Bramhaas Tech Pvt Ltd</p>
                     <p className="text-sm opacity-60">Pune, Maharashtra, India</p>
@@ -345,8 +373,8 @@ export default function App() {
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-16 mb-20">
             <div className="col-span-2">
-              <div className="flex items-center gap-4 mb-8">
-                <BramhaasLogo className="w-10 h-12" darkBg={true} />
+              <div className="flex items-center gap-3 mb-8">
+                <BramhaasMark className="w-9 h-11" fg="#e8e4f0" bg="#1a0d2e" />
                 <div className="flex flex-col leading-none">
                   <span className="font-display font-bold text-3xl tracking-tighter text-white">BRAMHAAS</span>
                   <span className="text-[12px] uppercase tracking-[0.5em] font-bold text-secondary">TECH</span>
