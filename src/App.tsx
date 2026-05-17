@@ -2,16 +2,17 @@ import { useState, useEffect, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { motion, AnimatePresence } from 'motion/react';
 import {
-  Cpu, BrainCircuit, Server,
+  Cpu, BrainCircuit, Server, Gauge,
   Mail, MapPin, Menu, X, CheckCircle2,
   Microchip, ShieldCheck, Code2, ArrowRight
 } from 'lucide-react';
 
 const SERVICES = [
   { title:"Embedded Systems", description:"Rigorous firmware development and hardware-software integration for specialized IoT and industrial deployments.", icon:<Cpu className="w-7 h-7"/>, features:["RTOS Implementation","Bare Metal Dev","FPGA Integration","System Security"] },
-  { title:"AI & Machine Learning", description:"Developing efficient algorithms that transform raw industrial data into predictive operational insights.", icon:<BrainCircuit className="w-7 h-7"/>, features:["Edge Intelligence","Visual Inspection","Condition Monitoring","Signal Processing"] },
+  { title:"AI, ML & Data Science", description:"Building intelligent systems and transforming complex data into decisions. From edge models to executive dashboards.", icon:<BrainCircuit className="w-7 h-7"/>, features:["Edge Intelligence","Model Optimization","Predictive Analytics","Reports & Dashboards"] },
   { title:"Hardware Design", description:"Technical PCB engineering for high-performance systems requiring extreme reliability and efficiency.", icon:<Microchip className="w-7 h-7"/>, features:["High-Speed Design","Design for Mfg","Power Mgmt","EMI Shielding"] },
-  { title:"IT Engineering", description:"Engineering the infrastructure that organisations depend on. Security, resilience, scale.", icon:<Server className="w-7 h-7"/>, features:["Secure Cloud","Network Ops","Infrastructure","DevOps Systems"] }
+  { title:"IT Engineering", description:"Engineering the infrastructure that organisations depend on. Security, resilience, scale.", icon:<Server className="w-7 h-7"/>, features:["Secure Cloud","Network Ops","Infrastructure","DevOps Systems"] },
+  { title:"High Performance Computing", description:"Designing and optimising systems that operate at the limits of computational capability. Real HPC experience, not theory.", icon:<Gauge className="w-7 h-7"/>, features:["HPC Architecture","System Tuning","Precision Benchmarking","Performance Analysis"] }
 ];
 
 const NAV_LINKS = [
@@ -174,7 +175,7 @@ export default function App() {
         <div className="bg-[#1a0d2e] py-5 overflow-hidden">
           <div className="flex gap-16 animate-[marquee_18s_linear_infinite] whitespace-nowrap">
             {[...Array(3)].map((_, i) =>
-              ['EMBEDDED SYSTEMS','AI & MACHINE LEARNING','HARDWARE DESIGN','IT ENGINEERING','BRAMHAAS TECH · PUNE'].map(t => (
+              ['EMBEDDED SYSTEMS','AI · ML · DATA SCIENCE','HARDWARE DESIGN','IT ENGINEERING','HIGH PERFORMANCE COMPUTING','BRAMHAAS TECH · PUNE'].map(t => (
                 <span key={`${i}-${t}`} className="text-[10px] font-bold tracking-[4px] text-[#d4a017] uppercase flex-shrink-0">
                   {t} <span className="text-[#3a2a5a] mx-6">·</span>
                 </span>
@@ -195,7 +196,7 @@ export default function App() {
                 Technical excellence<br/><em style={{fontStyle:'italic'}}>by design.</em>
               </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[1px] bg-[#ececec]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-[1px] bg-[#ececec]">
               {SERVICES.map((s, i) => (
                 <motion.div key={s.title}
                   initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}}
