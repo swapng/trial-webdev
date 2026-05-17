@@ -48,6 +48,11 @@ export default function App() {
   const [submitError, setSubmitError] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
+  // ── Init EmailJS once on mount ──
+  useEffect(() => {
+    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+  }, []);
+
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', fn);
@@ -59,15 +64,16 @@ export default function App() {
     if (!formRef.current) return;
     setSubmitting(true);
     setSubmitError(false);
+    // ── No public key as 4th arg — already initialised above ──
     emailjs.sendForm(
       import.meta.env.VITE_EMAILJS_SERVICE_ID,
       import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-      formRef.current,
-      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      formRef.current
     ).then(() => {
       setSubmitting(false);
       setSubmitted(true);
-    }).catch(() => {
+    }).catch((err) => {
+      console.error('EmailJS error:', err);
       setSubmitting(false);
       setSubmitError(true);
     });
@@ -439,9 +445,10 @@ export default function App() {
                           <label className="text-[9px] font-bold tracking-[3px] uppercase text-[#94a3b8] block mb-2">Area of Work</label>
                           <select name="domain" className="w-full bg-transparent border-b border-[#d8d4e0] py-3 text-[14px] text-[#0f172a] outline-none focus:border-[#d4a017] transition-colors appearance-none">
                             <option>Embedded Systems</option>
-                            <option>AI / ML</option>
+                            <option>AI / ML & Data Science</option>
                             <option>Hardware Design</option>
                             <option>IT Engineering</option>
+                            <option>High Performance Computing</option>
                           </select>
                         </div>
                         <div>
@@ -484,7 +491,7 @@ export default function App() {
             <div>
               <h4 className="text-[9px] font-bold tracking-[4px] text-[#d4a017] uppercase mb-7">Engineering</h4>
               <ul className="space-y-4">
-                {['Embedded Systems','AI & ML','Hardware Design','IT Engineering'].map(item => (
+                {['Embedded Systems','AI, ML & Data Science','Hardware Design','IT Engineering','High Performance Computing'].map(item => (
                   <li key={item}><a href="#services" className="text-[12px] text-white/40 hover:text-white transition-colors font-light">{item}</a></li>
                 ))}
               </ul>
