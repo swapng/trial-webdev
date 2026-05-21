@@ -4,15 +4,16 @@ import { motion, AnimatePresence } from 'motion/react';
 import {
   Cpu, BrainCircuit, Server, Gauge,
   Mail, MapPin, Menu, X, CheckCircle2,
-  Microchip, ShieldCheck, Code2, ArrowRight
+  Microchip, ShieldCheck, Code2, ArrowRight,
+  Network, FlaskConical, Globe, Layers
 } from 'lucide-react';
 
 const SERVICES = [
-  { title:"Embedded Systems", description:"Rigorous firmware development and hardware-software integration for specialized IoT and industrial deployments.", icon:<Cpu className="w-7 h-7"/>, features:["RTOS Implementation","Bare Metal Dev","FPGA Integration","System Security"] },
-  { title:"Hardware Design", description:"Technical PCB engineering for high-performance systems requiring extreme reliability and efficiency.", icon:<Microchip className="w-7 h-7"/>, features:["High-Speed Design","Design for Mfg","Power Mgmt","EMI Shielding"] },
-  { title:"High Performance Computing", description:"Designing and optimising systems that operate at the limits of computational capability. Real HPC experience, not theory.", icon:<Gauge className="w-7 h-7"/>, features:["HPC Architecture","System Tuning","Precision Benchmarking","Performance Analysis"] },
-  { title:"AI, ML & Data Science", description:"Building intelligent systems and transforming complex data into decisions. From edge models to executive dashboards.", icon:<BrainCircuit className="w-7 h-7"/>, features:["Edge Intelligence","Model Optimization","Predictive Analytics","Reports & Dashboards"] },
-  { title:"IT Engineering", description:"Engineering the infrastructure that organisations depend on. Security, resilience, scale.", icon:<Server className="w-7 h-7"/>, features:["Secure Cloud","Network Ops","Infrastructure","DevOps Systems"] }
+  { title:"Embedded Systems", description:"Rigorous firmware development and hardware-software integration for specialized IoT and industrial deployments.", icon:<Cpu className="w-8 h-8"/>, features:["RTOS Implementation","Bare Metal Dev","FPGA Integration","System Security"] },
+  { title:"Hardware Design", description:"Technical PCB engineering for high-performance systems requiring extreme reliability and efficiency.", icon:<Microchip className="w-8 h-8"/>, features:["High-Speed Design","Design for Mfg","Power Mgmt","EMI Shielding"] },
+  { title:"High Performance Computing", description:"Designing and optimising systems that operate at the limits of computational capability. Real HPC experience, not theory.", icon:<Gauge className="w-8 h-8"/>, features:["HPC Architecture","System Tuning","Precision Benchmarking","Performance Analysis"] },
+  { title:"AI, ML & Data Science", description:"Building intelligent systems and transforming complex data into decisions. From edge models to executive dashboards.", icon:<BrainCircuit className="w-8 h-8"/>, features:["Edge Intelligence","Model Optimization","Predictive Analytics","Reports & Dashboards"] },
+  { title:"IT Engineering", description:"Engineering the infrastructure that organisations depend on. Security, resilience, scale.", icon:<Server className="w-8 h-8"/>, features:["Secure Cloud","Network Ops","Infrastructure","DevOps Systems"] }
 ];
 
 const NAV_LINKS = [
@@ -24,10 +25,37 @@ const NAV_LINKS = [
 ];
 
 const PROCESS_STEPS = [
-  { step:"01", title:"Audit & Analysis", description:"Deep technical assessment of the problem — before a single line is written." },
-  { step:"02", title:"Architecture Design", description:"The blueprint comes before the build. Always." },
-  { step:"03", title:"Core Engineering", description:"Where high-level thinking meets low-level precision." },
-  { step:"04", title:"Validation Cycle", description:"We don't ship until we're certain. Then we validate again." }
+  {
+    step:"01", title:"Audit & Analysis",
+    description:"Deep technical assessment of the problem — before a single line is written.",
+    img:"https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=600",
+    alt:"Technical audit"
+  },
+  {
+    step:"02", title:"Architecture Design",
+    description:"The blueprint comes before the build. Always.",
+    img:"https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=600",
+    alt:"Architecture design"
+  },
+  {
+    step:"03", title:"Core Engineering",
+    description:"Where high-level thinking meets low-level precision.",
+    img:"https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600",
+    alt:"Engineering"
+  },
+  {
+    step:"04", title:"Validation Cycle",
+    description:"We don't ship until we're certain. Then we validate again.",
+    img:"https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=600",
+    alt:"Validation"
+  }
+];
+
+const EXPERTISE_CARDS = [
+  { icon:<FlaskConical className="w-6 h-6"/>, title:'Hardware', sub:'Prototyping Labs', offset:false },
+  { icon:<ShieldCheck className="w-6 h-6"/>, title:'Compliant', sub:'Global Standards', offset:true },
+  { icon:<Network className="w-6 h-6"/>, title:'Adaptive', sub:'AI Methodologies', offset:true },
+  { icon:<Layers className="w-6 h-6"/>, title:'Rigorous', sub:'Architectures', offset:false },
 ];
 
 const Logo = ({ size = 36, dark = false }: { size?: number; dark?: boolean }) => (
@@ -48,7 +76,6 @@ export default function App() {
   const [submitError, setSubmitError] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
-  // ── Init EmailJS once on mount ──
   useEffect(() => {
     emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
   }, []);
@@ -64,7 +91,6 @@ export default function App() {
     if (!formRef.current) return;
     setSubmitting(true);
     setSubmitError(false);
-    // ── No public key as 4th arg — already initialised above ──
     emailjs.sendForm(
       import.meta.env.VITE_EMAILJS_SERVICE_ID,
       import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
@@ -133,6 +159,23 @@ export default function App() {
         {/* HERO */}
         <section className="min-h-screen flex items-center bg-[#f9f8f6] relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#d4a017] to-transparent opacity-40"/>
+
+          {/* Subtle circuit grid background on right side */}
+          <div className="absolute right-0 top-0 w-1/2 h-full opacity-[0.035] pointer-events-none">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1a0d2e" strokeWidth="0.5"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#grid)"/>
+              <circle cx="20%" cy="30%" r="80" fill="none" stroke="#d4a017" strokeWidth="1"/>
+              <circle cx="60%" cy="60%" r="120" fill="none" stroke="#1a0d2e" strokeWidth="0.5"/>
+              <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#1a0d2e" strokeWidth="0.5"/>
+              <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#1a0d2e" strokeWidth="0.5"/>
+            </svg>
+          </div>
+
           <div className="max-w-7xl mx-auto px-8 w-full pt-28 pb-20">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <motion.div initial={{opacity:0,y:30}} animate={{opacity:1,y:0}} transition={{duration:0.9,ease:[0.25,0.46,0.45,0.94]}}>
@@ -161,6 +204,7 @@ export default function App() {
                   <span className="text-[9px] font-semibold tracking-[4px] text-[#aaa] uppercase">Pune · India</span>
                 </div>
               </motion.div>
+
               <motion.div
                 initial={{opacity:0,scale:0.95}} animate={{opacity:1,scale:1}}
                 transition={{duration:1.1,ease:[0.25,0.46,0.45,0.94],delay:0.2}}
@@ -169,6 +213,7 @@ export default function App() {
                   src="/assets/mark_light.png"
                   alt="Bramhaas Tech"
                   className="w-[460px] h-[460px] object-contain opacity-95"
+                  style={{mixBlendMode:'multiply'}}
                 />
               </motion.div>
             </div>
@@ -211,7 +256,14 @@ export default function App() {
                   initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}}
                   transition={{delay:i*0.1}} viewport={{once:true}}
                   className="bg-[#f9f8f6] p-10 group hover:bg-[#1a0d2e] transition-all duration-500 cursor-default">
-                  <div className="mb-8 text-[#0f172a] group-hover:text-[#d4a017] transition-colors duration-500">{s.icon}</div>
+                  {/* Icon with geometric container */}
+                  <div className="mb-8 relative w-14 h-14">
+                    <div className="absolute inset-0 border border-[#e2ddd8] group-hover:border-[#d4a017]/30 transition-colors duration-500 rotate-45"/>
+                    <div className="absolute inset-[6px] border border-[#d4a017]/20 group-hover:border-[#d4a017]/50 transition-colors duration-500 rotate-45"/>
+                    <div className="absolute inset-0 flex items-center justify-center text-[#0f172a] group-hover:text-[#d4a017] transition-colors duration-500">
+                      {s.icon}
+                    </div>
+                  </div>
                   <h3 className="text-[17px] font-bold text-[#0f172a] group-hover:text-[#f9f8f6] transition-colors duration-500 mb-4 leading-tight">{s.title}</h3>
                   <p className="text-[13px] text-[#94a3b8] leading-relaxed mb-8">{s.description}</p>
                   <div className="h-[1px] bg-[#ececec] group-hover:bg-white/10 mb-6 transition-colors duration-500"/>
@@ -262,18 +314,19 @@ export default function App() {
                   ))}
                 </div>
               </div>
+              {/* Expertise cards — with hover highlight */}
               <div className="grid grid-cols-2 gap-[1px] bg-[#e8e6e0]">
-                {[
-                  { icon:<Cpu className="w-5 h-5 text-[#0f172a]"/>, title:'Hardware', sub:'Prototyping Labs', offset:false },
-                  { icon:<ShieldCheck className="w-5 h-5 text-[#d4a017]"/>, title:'Compliant', sub:'Global Standards', offset:true },
-                  { icon:<BrainCircuit className="w-5 h-5 text-[#0f172a]"/>, title:'Adaptive', sub:'AI Methodologies', offset:true },
-                  { icon:<Code2 className="w-5 h-5 text-[#d4a017]"/>, title:'Rigorous', sub:'Architectures', offset:false },
-                ].map((item) => (
+                {EXPERTISE_CARDS.map((item) => (
                   <div key={item.title}
-                    className={`bg-[#f9f8f6] p-10 flex flex-col items-center justify-center text-center ${item.offset ? 'translate-y-4' : ''}`}>
-                    <div className="w-11 h-11 bg-[#f2f0ec] rounded-full flex items-center justify-center mb-5">{item.icon}</div>
-                    <div className="text-[11px] font-bold tracking-widest text-[#0f172a] uppercase mb-1">{item.title}</div>
-                    <div className="text-[10px] text-[#aaa] uppercase tracking-wider">{item.sub}</div>
+                    className={`bg-[#f9f8f6] p-10 flex flex-col items-center justify-center text-center group hover:bg-[#1a0d2e] transition-all duration-500 cursor-default ${item.offset ? 'translate-y-4' : ''}`}>
+                    <div className="relative w-16 h-16 mb-6">
+                      <div className="absolute inset-0 border border-[#e2ddd8] group-hover:border-[#d4a017]/30 transition-colors duration-500 rotate-45"/>
+                      <div className="absolute inset-0 flex items-center justify-center text-[#0f172a] group-hover:text-[#d4a017] transition-colors duration-500">
+                        {item.icon}
+                      </div>
+                    </div>
+                    <div className="text-[11px] font-bold tracking-widest text-[#0f172a] group-hover:text-[#f9f8f6] uppercase mb-1 transition-colors duration-500">{item.title}</div>
+                    <div className="text-[10px] text-[#aaa] group-hover:text-[#d4a017]/70 uppercase tracking-wider transition-colors duration-500">{item.sub}</div>
                   </div>
                 ))}
               </div>
@@ -303,11 +356,27 @@ export default function App() {
                 <motion.div key={step.step}
                   initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}}
                   transition={{delay:i*0.1}} viewport={{once:true}}
-                  className="bg-[#f9f8f6] p-10 group hover:bg-[#f2f0ec] transition-all duration-300">
-                  <div style={{fontFamily:'Georgia,serif'}} className="text-[72px] font-light text-[#ececec] group-hover:text-[#e8e4dc] leading-none mb-6 transition-colors duration-300">{step.step}</div>
-                  <div className="w-6 h-[2px] bg-[#d4a017] mb-5"/>
-                  <h3 className="text-[13px] font-bold uppercase tracking-widest text-[#0f172a] mb-4">{step.title}</h3>
-                  <p className="text-[12px] text-[#94a3b8] leading-relaxed">{step.description}</p>
+                  className="bg-[#f9f8f6] group hover:bg-[#1a0d2e] transition-all duration-500 cursor-default overflow-hidden">
+                  {/* Step image */}
+                  <div className="relative h-40 overflow-hidden">
+                    <img
+                      src={step.img}
+                      alt={step.alt}
+                      className="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700"
+                      referrerPolicy="no-referrer"
+                    />
+                    {/* Step number overlay on image */}
+                    <div className="absolute top-4 left-4">
+                      <span style={{fontFamily:'Georgia,serif'}} className="text-[48px] font-light text-white/80 leading-none">{step.step}</span>
+                    </div>
+                    {/* Gold bottom line on image */}
+                    <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#d4a017] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"/>
+                  </div>
+                  <div className="p-8">
+                    <div className="w-6 h-[2px] bg-[#d4a017] mb-5"/>
+                    <h3 className="text-[13px] font-bold uppercase tracking-widest text-[#0f172a] group-hover:text-[#f9f8f6] mb-4 transition-colors duration-500">{step.title}</h3>
+                    <p className="text-[12px] text-[#94a3b8] group-hover:text-white/50 leading-relaxed transition-colors duration-500">{step.description}</p>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -315,28 +384,50 @@ export default function App() {
         </section>
 
         {/* TRUST */}
-        <section className="py-32 bg-[#1a0d2e] scroll-mt-20">
-          <div className="max-w-7xl mx-auto px-8">
+        <section className="py-32 bg-[#1a0d2e] scroll-mt-20 relative overflow-hidden">
+          {/* Decorative geometric background */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.04]">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="dots" width="60" height="60" patternUnits="userSpaceOnUse">
+                  <circle cx="30" cy="30" r="1" fill="#d4a017"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#dots)"/>
+            </svg>
+          </div>
+          {/* Large decorative quote mark */}
+          <div className="absolute top-8 left-8 opacity-5" style={{fontFamily:'Georgia,serif',fontSize:'240px',color:'#d4a017',lineHeight:1}}>"</div>
+
+          <div className="max-w-7xl mx-auto px-8 relative">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-white/5 mb-24">
               {[
                 { num:'10+', label:'Years of combined engineering experience', small:false },
                 { num:'∀', label:'Every problem we take on, we own completely', small:true },
                 { num:'1', label:'Standard of work. World class or nothing.', small:false },
               ].map((item) => (
-                <div key={item.num} className="bg-[#1a0d2e] p-10 text-center">
+                <div key={item.num} className="bg-[#1a0d2e] p-10 text-center group hover:bg-[#221040] transition-colors duration-300">
                   <div style={{fontFamily:'Georgia,serif'}} className={`font-light text-[#d4a017] leading-none mb-4 ${item.small ? 'text-[44px]' : 'text-[64px]'}`}>{item.num}</div>
                   <p className="text-[11px] text-white/40 leading-relaxed font-light uppercase tracking-wider">{item.label}</p>
                 </div>
               ))}
             </div>
-            <div className="grid md:grid-cols-3 gap-[1px] bg-white/5">
+
+            {/* Philosophy cards — with left accent bar and subtle hover */}
+            <div className="grid md:grid-cols-3 gap-6">
               {[
-                { title:'Depth over breadth.', body:'When we take on a problem, we go deep. Into the architecture, the edge cases, the things others miss. You get engineers who think, not people who execute checklists.' },
-                { title:'We say what we mean.', body:'If a problem is not solvable the way you have imagined it, we will say so — and offer a better path. Honesty is not a policy here. It is how we work.' },
-                { title:'Built for generations.', body:'Every decision measured against one question: will we be proud of this in 20 years? If the answer is no, we do not do it.' },
+                { title:'Depth over breadth.', body:'When we take on a problem, we go deep. Into the architecture, the edge cases, the things others miss. You get engineers who think, not people who execute checklists.', icon:<Globe className="w-5 h-5"/> },
+                { title:'We say what we mean.', body:'If a problem is not solvable the way you have imagined it, we will say so — and offer a better path. Honesty is not a policy here. It is how we work.', icon:<ShieldCheck className="w-5 h-5"/> },
+                { title:'Built for generations.', body:'Every decision measured against one question: will we be proud of this in 20 years? If the answer is no, we do not do it.', icon:<Layers className="w-5 h-5"/> },
               ].map((item) => (
-                <div key={item.title} className="bg-[#1a0d2e] p-12 border-t-2 border-[#d4a017]">
-                  <h3 style={{fontFamily:'Georgia,serif'}} className="text-[22px] font-light text-[#fafafa] mb-5 leading-tight italic">{item.title}</h3>
+                <div key={item.title} className="bg-[#1a0d2e] p-10 border border-white/5 hover:border-[#d4a017]/20 transition-all duration-500 group relative overflow-hidden">
+                  {/* Gold left accent */}
+                  <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-[#d4a017]"/>
+                  {/* Icon top right */}
+                  <div className="absolute top-8 right-8 text-[#d4a017]/20 group-hover:text-[#d4a017]/40 transition-colors duration-500">
+                    {item.icon}
+                  </div>
+                  <h3 style={{fontFamily:'Georgia,serif'}} className="text-[22px] font-light text-[#fafafa] mb-5 leading-tight italic pr-8">{item.title}</h3>
                   <p className="text-[13px] text-white/45 leading-[1.9] font-light">{item.body}</p>
                 </div>
               ))}
