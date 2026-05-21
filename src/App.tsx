@@ -2,18 +2,142 @@ import { useState, useEffect, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { motion, AnimatePresence } from 'motion/react';
 import {
-  Cpu, BrainCircuit, Server, Gauge,
   Mail, MapPin, Menu, X, CheckCircle2,
-  Microchip, ShieldCheck, Code2, ArrowRight,
-  Network, FlaskConical, Globe, Layers
+  ArrowRight, Globe, ShieldCheck, Layers
 } from 'lucide-react';
 
+const IconEmbedded = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="8" y="8" width="16" height="16" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+    <rect x="11" y="11" width="10" height="10" rx="0.5" stroke="currentColor" strokeWidth="1"/>
+    <line x1="8" y1="12" x2="5" y2="12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="8" y1="16" x2="5" y2="16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="8" y1="20" x2="5" y2="20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="24" y1="12" x2="27" y2="12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="24" y1="16" x2="27" y2="16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="24" y1="20" x2="27" y2="20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="12" y1="8" x2="12" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="16" y1="8" x2="16" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="20" y1="8" x2="20" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="12" y1="24" x2="12" y2="27" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="16" y1="24" x2="16" y2="27" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="20" y1="24" x2="20" y2="27" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <circle cx="16" cy="16" r="2" fill="currentColor"/>
+  </svg>
+);
+
+const IconHardware = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="4" y="10" width="24" height="12" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+    <line x1="8" y1="10" x2="8" y2="22" stroke="currentColor" strokeWidth="1"/>
+    <line x1="12" y1="10" x2="12" y2="22" stroke="currentColor" strokeWidth="1"/>
+    <line x1="16" y1="10" x2="16" y2="22" stroke="currentColor" strokeWidth="1"/>
+    <line x1="20" y1="10" x2="20" y2="22" stroke="currentColor" strokeWidth="1"/>
+    <line x1="24" y1="10" x2="24" y2="22" stroke="currentColor" strokeWidth="1"/>
+    <line x1="9" y1="7" x2="9" y2="10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="13" y1="7" x2="13" y2="10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="17" y1="7" x2="17" y2="10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="21" y1="7" x2="21" y2="10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="9" y1="22" x2="9" y2="25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="13" y1="22" x2="13" y2="25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="17" y1="22" x2="17" y2="25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="21" y1="22" x2="21" y2="25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <rect x="6" y="13" width="4" height="6" rx="0.5" stroke="currentColor" strokeWidth="1"/>
+  </svg>
+);
+
+const IconHPC = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="16" cy="16" r="11" stroke="currentColor" strokeWidth="1.5"/>
+    <circle cx="16" cy="16" r="3" fill="currentColor"/>
+    <line x1="16" y1="5" x2="16" y2="13" stroke="currentColor" strokeWidth="1.5"/>
+    <line x1="16" y1="19" x2="16" y2="27" stroke="currentColor" strokeWidth="1.5"/>
+    <line x1="5" y1="16" x2="13" y2="16" stroke="currentColor" strokeWidth="1.5"/>
+    <line x1="19" y1="16" x2="27" y2="16" stroke="currentColor" strokeWidth="1.5"/>
+    <line x1="7.9" y1="7.9" x2="13.8" y2="13.8" stroke="currentColor" strokeWidth="1.5"/>
+    <line x1="18.2" y1="18.2" x2="24.1" y2="24.1" stroke="currentColor" strokeWidth="1.5"/>
+    <line x1="24.1" y1="7.9" x2="18.2" y2="13.8" stroke="currentColor" strokeWidth="1.5"/>
+    <line x1="13.8" y1="18.2" x2="7.9" y2="24.1" stroke="currentColor" strokeWidth="1.5"/>
+  </svg>
+);
+
+const IconAI = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="16" cy="9" r="3" stroke="currentColor" strokeWidth="1.5"/>
+    <circle cx="7" cy="22" r="3" stroke="currentColor" strokeWidth="1.5"/>
+    <circle cx="25" cy="22" r="3" stroke="currentColor" strokeWidth="1.5"/>
+    <line x1="13.4" y1="10.8" x2="9.2" y2="19.6" stroke="currentColor" strokeWidth="1.5"/>
+    <line x1="18.6" y1="10.8" x2="22.8" y2="19.6" stroke="currentColor" strokeWidth="1.5"/>
+    <line x1="10" y1="22" x2="22" y2="22" stroke="currentColor" strokeWidth="1.5"/>
+    <circle cx="16" cy="16" r="1.5" fill="currentColor"/>
+    <line x1="14.8" y1="14.8" x2="9.5" y2="20.5" stroke="currentColor" strokeWidth="1" strokeDasharray="1.5 1.5"/>
+    <line x1="17.2" y1="14.8" x2="22.5" y2="20.5" stroke="currentColor" strokeWidth="1" strokeDasharray="1.5 1.5"/>
+  </svg>
+);
+
+const IconIT = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="4" y="5" width="24" height="15" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+    <line x1="4" y1="17" x2="28" y2="17" stroke="currentColor" strokeWidth="1"/>
+    <rect x="7" y="8" width="5" height="3" rx="0.5" stroke="currentColor" strokeWidth="1"/>
+    <rect x="14" y="8" width="5" height="3" rx="0.5" stroke="currentColor" strokeWidth="1"/>
+    <circle cx="23" cy="9.5" r="1.5" stroke="currentColor" strokeWidth="1"/>
+    <line x1="12" y1="20" x2="10" y2="25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="20" y1="20" x2="22" y2="25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="8" y1="25" x2="24" y2="25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <circle cx="16" cy="14" r="1" fill="currentColor"/>
+  </svg>
+);
+
+const IconPrototyping = () => (
+  <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 5 L12 14 L8 20 L8 27 L24 27 L24 20 L20 14 L20 5 Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+    <line x1="12" y1="5" x2="20" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
+    <line x1="10" y1="18" x2="22" y2="18" stroke="currentColor" strokeWidth="1"/>
+    <circle cx="16" cy="22" r="2" stroke="currentColor" strokeWidth="1.2"/>
+    <line x1="14" y1="10" x2="18" y2="10" stroke="currentColor" strokeWidth="1" strokeDasharray="1 1.5"/>
+  </svg>
+);
+
+const IconCompliant = () => (
+  <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 4 L26 8 L26 18 C26 23 21 27 16 28 C11 27 6 23 6 18 L6 8 Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+    <polyline points="11,16 14.5,19.5 21,13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const IconAdaptive = () => (
+  <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="16" cy="16" r="4" stroke="currentColor" strokeWidth="1.5"/>
+    <circle cx="6" cy="10" r="2.5" stroke="currentColor" strokeWidth="1.2"/>
+    <circle cx="26" cy="10" r="2.5" stroke="currentColor" strokeWidth="1.2"/>
+    <circle cx="6" cy="22" r="2.5" stroke="currentColor" strokeWidth="1.2"/>
+    <circle cx="26" cy="22" r="2.5" stroke="currentColor" strokeWidth="1.2"/>
+    <line x1="8.2" y1="11.2" x2="13" y2="14" stroke="currentColor" strokeWidth="1.2"/>
+    <line x1="23.8" y1="11.2" x2="19" y2="14" stroke="currentColor" strokeWidth="1.2"/>
+    <line x1="8.2" y1="20.8" x2="13" y2="18" stroke="currentColor" strokeWidth="1.2"/>
+    <line x1="23.8" y1="20.8" x2="19" y2="18" stroke="currentColor" strokeWidth="1.2"/>
+  </svg>
+);
+
+const IconRigorous = () => (
+  <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="6" y="6" width="20" height="20" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+    <rect x="10" y="10" width="12" height="12" rx="0.5" stroke="currentColor" strokeWidth="1.2"/>
+    <rect x="13.5" y="13.5" width="5" height="5" rx="0.3" stroke="currentColor" strokeWidth="1"/>
+    <line x1="6" y1="16" x2="10" y2="16" stroke="currentColor" strokeWidth="1"/>
+    <line x1="22" y1="16" x2="26" y2="16" stroke="currentColor" strokeWidth="1"/>
+    <line x1="16" y1="6" x2="16" y2="10" stroke="currentColor" strokeWidth="1"/>
+    <line x1="16" y1="22" x2="16" y2="26" stroke="currentColor" strokeWidth="1"/>
+  </svg>
+);
+
 const SERVICES = [
-  { title:"Embedded Systems", description:"Rigorous firmware development and hardware-software integration for specialized IoT and industrial deployments.", icon:<Cpu className="w-8 h-8"/>, features:["RTOS Implementation","Bare Metal Dev","FPGA Integration","System Security"] },
-  { title:"Hardware Design", description:"Technical PCB engineering for high-performance systems requiring extreme reliability and efficiency.", icon:<Microchip className="w-8 h-8"/>, features:["High-Speed Design","Design for Mfg","Power Mgmt","EMI Shielding"] },
-  { title:"High Performance Computing", description:"Designing and optimising systems that operate at the limits of computational capability. Real HPC experience, not theory.", icon:<Gauge className="w-8 h-8"/>, features:["HPC Architecture","System Tuning","Precision Benchmarking","Performance Analysis"] },
-  { title:"AI, ML & Data Science", description:"Building intelligent systems and transforming complex data into decisions. From edge models to executive dashboards.", icon:<BrainCircuit className="w-8 h-8"/>, features:["Edge Intelligence","Model Optimization","Predictive Analytics","Reports & Dashboards"] },
-  { title:"IT Engineering", description:"Engineering the infrastructure that organisations depend on. Security, resilience, scale.", icon:<Server className="w-8 h-8"/>, features:["Secure Cloud","Network Ops","Infrastructure","DevOps Systems"] }
+  { title:"Embedded Systems", description:"Rigorous firmware development and hardware-software integration for specialized IoT and industrial deployments.", icon:<IconEmbedded/>, features:["RTOS Implementation","Bare Metal Dev","FPGA Integration","System Security"] },
+  { title:"Hardware Design", description:"Technical PCB engineering for high-performance systems requiring extreme reliability and efficiency.", icon:<IconHardware/>, features:["High-Speed Design","Design for Mfg","Power Mgmt","EMI Shielding"] },
+  { title:"High Performance Computing", description:"Designing and optimising systems that operate at the limits of computational capability. Real HPC experience, not theory.", icon:<IconHPC/>, features:["HPC Architecture","System Tuning","Precision Benchmarking","Performance Analysis"] },
+  { title:"AI, ML & Data Science", description:"Building intelligent systems and transforming complex data into decisions. From edge models to executive dashboards.", icon:<IconAI/>, features:["Edge Intelligence","Model Optimization","Predictive Analytics","Reports & Dashboards"] },
+  { title:"IT Engineering", description:"Engineering the infrastructure that organisations depend on. Security, resilience, scale.", icon:<IconIT/>, features:["Secure Cloud","Network Ops","Infrastructure","DevOps Systems"] }
 ];
 
 const NAV_LINKS = [
@@ -52,10 +176,10 @@ const PROCESS_STEPS = [
 ];
 
 const EXPERTISE_CARDS = [
-  { icon:<FlaskConical className="w-6 h-6"/>, title:'Hardware', sub:'Prototyping Labs', offset:false },
-  { icon:<ShieldCheck className="w-6 h-6"/>, title:'Compliant', sub:'Global Standards', offset:true },
-  { icon:<Network className="w-6 h-6"/>, title:'Adaptive', sub:'AI Methodologies', offset:true },
-  { icon:<Layers className="w-6 h-6"/>, title:'Rigorous', sub:'Architectures', offset:false },
+  { icon:<IconPrototyping/>, title:'Hardware', sub:'Prototyping Labs', offset:false },
+  { icon:<IconCompliant/>, title:'Compliant', sub:'Global Standards', offset:true },
+  { icon:<IconAdaptive/>, title:'Adaptive', sub:'AI Methodologies', offset:true },
+  { icon:<IconRigorous/>, title:'Rigorous', sub:'Architectures', offset:false },
 ];
 
 const Logo = ({ size = 36, dark = false }: { size?: number; dark?: boolean }) => (
