@@ -32,11 +32,11 @@ const PROCESS_STEPS = [
 
 const Logo = ({ size = 36, dark = false }: { size?: number; dark?: boolean }) => (
   <img
-    src={dark ? '/assets/mark_dark.png' : '/assets/mark_light.png'}
+    src={dark ? '/assets/mark_light.png' : '/assets/mark_dark.png'}
     alt="Bramhaas Tech"
     width={size}
     height={size}
-    style={{ objectFit:'contain', display:'block' }}
+    style={{ objectFit:'contain', display:'block', mixBlendMode: dark ? 'screen' : 'multiply' }}
   />
 );
 
@@ -88,7 +88,10 @@ export default function App() {
           <a href="#" className="flex items-center gap-3 group" onClick={() => window.scrollTo({top:0,behavior:'smooth'})}>
             <Logo size={34} />
             <div className="flex flex-col leading-none">
-              <span className="font-black text-[15px] tracking-[3px] text-[#0f172a]">BRAMHAAS</span>
+              <span className="font-black text-[15px] tracking-[3px] text-[#0f172a] relative">
+                BRAMHAAS
+                <span className={`absolute -bottom-[2px] left-0 h-[1.5px] bg-[#d4a017] transition-all duration-700 ${scrolled ? 'w-full' : 'w-0'}`}/>
+              </span>
               <span className="text-[8px] tracking-[5px] font-bold text-[#d4a017] mt-0.5">TECH</span>
             </div>
           </a>
