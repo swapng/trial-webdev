@@ -198,7 +198,38 @@ export default function App() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(false);
+  const [cookieVisible, setCookieVisible] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    const consent = localStorage.getItem('bt_cookie_consent');
+    if (!consent) {
+      const t = setTimeout(() => setCookieVisible(true), 1200);
+      return () => clearTimeout(t);
+    }
+  }, []);
+
+  const acceptCookies = () => {
+    localStorage.setItem('bt_cookie_consent', 'accepted');
+    setCookieVisible(false);
+    // Load GA immediately after consent
+    if (!(window as any).gtag) {
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-W1P64STVKM';
+      document.head.appendChild(s);
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      function gtag(...args: any[]){ (window as any).dataLayer.push(args); }
+      (window as any).gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-W1P64STVKM');
+    }
+  };
+
+  const declineCookies = () => {
+    localStorage.setItem('bt_cookie_consent', 'declined');
+    setCookieVisible(false);
+  };
 
   useEffect(() => {
     emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
@@ -729,6 +760,53 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* COOKIE BANNER */}
+      <AnimatePresence>
+        {cookieVisible && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-32px)] max-w-2xl"
+          >
+            <div className="bg-[#1a0d2e] border border-white/10 px-8 py-6 flex flex-col sm:flex-row items-start sm:items-center gap-6 shadow-2xl">
+              {/* Gold left accent */}
+              <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-[#d4a017]"/>
+              {/* Cookie icon */}
+              <div className="flex-shrink-0 hidden sm:block">
+                <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="11" stroke="#d4a017" strokeWidth="1.5"/>
+                  <circle cx="11" cy="12" r="1.5" fill="#d4a017"/>
+                  <circle cx="19" cy="10" r="1" fill="#d4a017"/>
+                  <circle cx="20" cy="18" r="1.5" fill="#d4a017"/>
+                  <circle cx="13" cy="20" r="1" fill="#d4a017"/>
+                  <circle cx="16" cy="15" r="1" fill="rgba(212,160,23,0.4)"/>
+                </svg>
+              </div>
+              {/* Text */}
+              <p className="text-[12px] text-white/60 leading-relaxed font-light flex-1">
+                We use cookies on our website to see how you interact with it.{' '}
+                By accepting, you agree to our use of such cookies.
+              </p>
+              {/* Buttons */}
+              <div className="flex items-center gap-3 flex-shrink-0">
+                <button
+                  onClick={declineCookies}
+                  className="text-[9px] font-bold tracking-[3px] uppercase text-white/40 hover:text-white/70 transition-colors duration-200 px-3 py-2">
+                  Decline
+                </button>
+                <button
+                  onClick={acceptCookies}
+                  className="text-[9px] font-bold tracking-[3px] uppercase bg-[#d4a017] text-[#1a0d2e] px-6 py-3 hover:bg-white hover:text-[#1a0d2e] transition-all duration-300">
+                  Accept
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <style>{`
         @keyframes marquee {
