@@ -184,7 +184,7 @@ const EXPERTISE_CARDS = [
 
 const Logo = ({ size = 36, dark = false }: { size?: number; dark?: boolean }) => (
   <img
-    src={dark ? '/assets/mark_light.png' : '/assets/mark_dark.png'}
+    src={dark ? '/assets/mark_light.png' : '/assets/mark_light.png'}
     alt="Bramhaas Tech"
     width={size}
     height={size}
@@ -312,72 +312,235 @@ export default function App() {
       <main>
 
         {/* HERO */}
-        <section className="min-h-screen flex items-center bg-[#f9f8f6] relative overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#d4a017] to-transparent opacity-40"/>
+        <section className="min-h-screen flex items-center bg-[#f7f5f2] relative overflow-hidden">
 
-          {/* Subtle circuit grid background on right side */}
-          <div className="absolute right-0 top-0 w-1/2 h-full opacity-[0.035] pointer-events-none">
-            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1a0d2e" strokeWidth="0.5"/>
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#grid)"/>
-              <circle cx="20%" cy="30%" r="80" fill="none" stroke="#d4a017" strokeWidth="1"/>
-              <circle cx="60%" cy="60%" r="120" fill="none" stroke="#1a0d2e" strokeWidth="0.5"/>
-              <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#1a0d2e" strokeWidth="0.5"/>
-              <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#1a0d2e" strokeWidth="0.5"/>
-            </svg>
-          </div>
+          {/* Corner brackets */}
+          <div className="absolute top-5 left-5 w-6 h-6 border-t border-l border-[#d4a017]/30 pointer-events-none z-20"/>
+          <div className="absolute bottom-5 right-5 w-6 h-6 border-b border-r border-[#d4a017]/30 pointer-events-none z-20"/>
 
-          <div className="max-w-7xl mx-auto px-8 w-full pt-28 pb-20">
+          {/* Gold top rule — draws in */}
+          <motion.div
+            initial={{scaleX:0}} animate={{scaleX:1}}
+            transition={{duration:1.4, ease:[0.25,0.46,0.45,0.94], delay:0.15}}
+            style={{transformOrigin:'center'}}
+            className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#d4a017] to-transparent opacity-45 z-20"
+          />
+
+          {/* Subtle dot grid */}
+          <div className="absolute inset-0 pointer-events-none"
+            style={{backgroundImage:'radial-gradient(circle, #1a0d2e 1px, transparent 1px)', backgroundSize:'44px 44px', opacity:0.027}}/>
+
+          {/* ── LEFT CONTENT ── */}
+          <div className="max-w-7xl mx-auto px-8 w-full pt-28 pb-20 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <motion.div initial={{opacity:0,y:30}} animate={{opacity:1,y:0}} transition={{duration:0.9,ease:[0.25,0.46,0.45,0.94]}}>
-                <div className="flex items-center gap-3 mb-10">
-                  <div className="w-8 h-[1px] bg-[#d4a017]"/>
-                  <span className="text-[9px] font-bold tracking-[5px] text-[#d4a017] uppercase">Advanced Engineering Systems</span>
-                </div>
-                <h1 style={{fontFamily:'Georgia,serif'}} className="text-[72px] leading-[1] font-light text-[#0f172a] tracking-[-2px] mb-8">
-                  Precision<br/>
-                  <em className="text-[#d4a017]" style={{fontStyle:'italic'}}>meets</em><br/>
-                  <span className="font-semibold">innovation.</span>
-                </h1>
-                <p className="text-[15px] text-[#64748b] leading-[1.9] font-light max-w-md mb-12">
-                  Where rigorous engineering meets real-world problems. Built for what matters — not what is easy.
-                </p>
-                <div className="flex items-center gap-0">
-                  <a href="#contact" className="bg-[#1a0d2e] text-[#f9f8f6] px-8 py-4 text-[10px] font-bold tracking-[3px] uppercase hover:bg-[#d4a017] hover:text-[#1a0d2e] transition-all duration-300 flex items-center gap-3">
-                    Start a Collaboration <ArrowRight size={14}/>
-                  </a>
-                  <a href="#services" className="px-8 py-4 text-[10px] font-bold tracking-[3px] uppercase text-[#0f172a] hover:text-[#d4a017] transition-colors duration-300">
-                    Our Capability →
-                  </a>
-                </div>
-                <div className="flex items-center gap-3 mt-16">
-                  <div className="w-5 h-[1px] bg-[#d4a017] opacity-60"/>
-                  <span className="text-[9px] font-semibold tracking-[4px] text-[#aaa] uppercase">Pune · India</span>
-                </div>
-              </motion.div>
+              <div>
 
-              <motion.div
-                initial={{opacity:0,scale:0.95}} animate={{opacity:1,scale:1}}
-                transition={{duration:1.1,ease:[0.25,0.46,0.45,0.94],delay:0.2}}
-                className="flex items-center justify-center">
-                <img
-                  src="/assets/mark_light.png"
-                  alt="Bramhaas Tech"
-                  className="w-[460px] h-[460px] object-contain opacity-95"
-                  style={{mixBlendMode:'multiply'}}
+                {/* Live pulsing tag */}
+                <motion.div
+                  initial={{opacity:0, y:12}} animate={{opacity:1, y:0}}
+                  transition={{duration:0.6, delay:0.35}}
+                  className="inline-flex items-center gap-2 mb-9"
+                  style={{border:'0.5px solid rgba(212,160,23,0.4)', padding:'6px 14px 6px 10px'}}
+                >
+                  <motion.div
+                    animate={{scale:[1,0.65,1], opacity:[1,0.4,1]}}
+                    transition={{duration:2, repeat:Infinity, ease:'easeInOut'}}
+                    style={{width:5, height:5, background:'#d4a017', borderRadius:'50%', flexShrink:0}}
+                  />
+                  <span className="text-[8.5px] font-bold tracking-[3px] text-[#d4a017] uppercase">Advanced Engineering Systems</span>
+                </motion.div>
+
+                {/* Headline — each word slides up */}
+                <div className="mb-6">
+                  {[
+                    {text:'Precision', cls:'font-light text-[#0f172a]'},
+                    {text:'meets',     cls:'italic text-[#d4a017]'},
+                    {text:'innovation.',cls:'font-semibold text-[#0f172a]'},
+                  ].map((line, i) => (
+                    <motion.div key={line.text}
+                      initial={{opacity:0, y:42}} animate={{opacity:1, y:0}}
+                      transition={{duration:0.8, delay:0.42 + i*0.13, ease:[0.16,1,0.3,1]}}
+                      style={{display:'block', overflow:'hidden'}}
+                    >
+                      <span
+                        className={`block text-[72px] leading-[1.02] tracking-[-2px] ${line.cls}`}
+                        style={{fontFamily:'Georgia,serif'}}
+                      >{line.text}</span>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Gold divider line */}
+                <motion.div
+                  initial={{scaleX:0}} animate={{scaleX:1}}
+                  transition={{duration:0.9, delay:0.85, ease:[0.25,0.46,0.45,0.94]}}
+                  style={{transformOrigin:'left', height:1, background:'linear-gradient(to right, #d4a017, transparent)', marginBottom:20, width:200}}
                 />
+
+                {/* Description */}
+                <motion.p
+                  initial={{opacity:0, y:16}} animate={{opacity:1, y:0}}
+                  transition={{duration:0.7, delay:0.95, ease:[0.25,0.46,0.45,0.94]}}
+                  className="text-[14px] text-[#64748b] leading-[1.9] font-light max-w-sm mb-10"
+                >
+                  Where rigorous engineering meets real-world problems. Built for what matters — not what is easy.
+                </motion.p>
+
+                {/* CTAs */}
+                <motion.div
+                  initial={{opacity:0, y:16}} animate={{opacity:1, y:0}}
+                  transition={{duration:0.7, delay:1.1, ease:[0.25,0.46,0.45,0.94]}}
+                  className="flex items-center"
+                >
+                  <a href="#contact"
+                    className="group relative bg-[#1a0d2e] text-[#f7f5f2] px-8 py-4 text-[10px] font-bold tracking-[3px] uppercase flex items-center gap-3 overflow-hidden"
+                    style={{transition:'color 0.3s'}}
+                    onMouseEnter={e => (e.currentTarget.style.color='#1a0d2e')}
+                    onMouseLeave={e => (e.currentTarget.style.color='#f7f5f2')}
+                  >
+                    <span className="absolute inset-0 bg-[#d4a017] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                      style={{transform:'translateX(-101%)'}}
+                      onMouseEnter={e => (e.currentTarget.style.transform='translateX(0)')}
+                    />
+                    <span className="relative z-10 flex items-center gap-3">
+                      Start a Collaboration
+                      <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform duration-200"/>
+                    </span>
+                  </a>
+                  <a href="#services"
+                    className="px-7 py-4 text-[10px] font-bold tracking-[3px] uppercase text-[#0f172a] hover:text-[#d4a017] transition-colors duration-300 flex items-center gap-2">
+                    Our Capability
+                    <motion.span animate={{x:[0,4,0]}} transition={{repeat:Infinity, duration:2, ease:'easeInOut'}}>→</motion.span>
+                  </a>
+                </motion.div>
+
+                {/* Location */}
+                <motion.div
+                  initial={{opacity:0}} animate={{opacity:1}}
+                  transition={{duration:0.8, delay:1.25}}
+                  className="flex items-center gap-3 mt-10"
+                >
+                  <div className="w-5 h-[1px] bg-[#d4a017] opacity-50"/>
+                  <span className="text-[8px] font-semibold tracking-[4px] text-[#bbb] uppercase">Pune · India</span>
+                </motion.div>
+
+
+
+              </div>
+
+              {/* Right column — orbital visual */}
+              <motion.div
+                initial={{opacity:0, scale:0.92}} animate={{opacity:1, scale:1}}
+                transition={{duration:1.2, delay:0.3, ease:[0.16,1,0.3,1]}}
+                className="hidden lg:flex items-center justify-center"
+                style={{height:'560px', position:'relative'}}
+              >
+                <div style={{width:'520px', height:'520px', position:'relative', flexShrink:0}}>
+
+                  <motion.div animate={{rotate:360}} transition={{duration:90, repeat:Infinity, ease:'linear'}}
+                    style={{position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center'}}>
+                    <svg width="520" height="520" viewBox="0 0 520 520" fill="none">
+                      <ellipse cx="260" cy="260" rx="242" ry="155" stroke="#d4a017" strokeWidth="0.7" strokeDasharray="7 18" opacity="0.22"/>
+                      <line x1="260" y1="12" x2="260" y2="32" stroke="#d4a017" strokeWidth="2.5" opacity="0.45"/>
+                      <line x1="260" y1="488" x2="260" y2="508" stroke="#d4a017" strokeWidth="2.5" opacity="0.3"/>
+                      <line x1="12" y1="260" x2="32" y2="260" stroke="#d4a017" strokeWidth="2.5" opacity="0.22"/>
+                      <line x1="488" y1="260" x2="508" y2="260" stroke="#d4a017" strokeWidth="2.5" opacity="0.38"/>
+                    </svg>
+                  </motion.div>
+
+                  <motion.div animate={{rotate:-360}} transition={{duration:55, repeat:Infinity, ease:'linear'}}
+                    style={{position:'absolute', inset:'32px', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                    <svg width="456" height="456" viewBox="0 0 456 456" fill="none">
+                      <ellipse cx="228" cy="228" rx="212" ry="135" stroke="#1a0d2e" strokeWidth="0.8" opacity="0.05"/>
+                      <ellipse cx="228" cy="228" rx="212" ry="135" stroke="#d4a017" strokeWidth="0.6" strokeDasharray="4 14" opacity="0.13"/>
+                    </svg>
+                  </motion.div>
+
+                  <motion.div animate={{rotate:360}} transition={{duration:30, repeat:Infinity, ease:'linear'}}
+                    style={{position:'absolute', inset:'86px', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                    <svg width="348" height="348" viewBox="0 0 348 348" fill="none">
+                      <ellipse cx="174" cy="174" rx="158" ry="100" stroke="#d4a017" strokeWidth="0.5" strokeDasharray="3 11" opacity="0.11"/>
+                      <circle cx="174" cy="74" r="5" fill="#d4a017" opacity="0.65"/>
+                      <circle cx="174" cy="74" r="10" fill="#d4a017" opacity="0.1"/>
+                    </svg>
+                  </motion.div>
+
+                  <svg width="820" height="820" viewBox="0 0 520 520" fill="none" style={{position:'absolute', inset:0}}>
+                    <motion.line x1="260" y1="18" x2="260" y2="502" stroke="#d4a017" strokeWidth="0.9" opacity="0.2"
+                      initial={{pathLength:0}} animate={{pathLength:1}}
+                      transition={{duration:1.6, delay:0.85, ease:[0.25,0.46,0.45,0.94]}}/>
+                    <motion.line x1="136" y1="158" x2="384" y2="158" stroke="#d4a017" strokeWidth="2.8" opacity="0.38"
+                      initial={{pathLength:0}} animate={{pathLength:1}}
+                      transition={{duration:1.0, delay:1.15, ease:[0.25,0.46,0.45,0.94]}}/>
+                    <motion.line x1="136" y1="150" x2="136" y2="166" stroke="#d4a017" strokeWidth="2" opacity="0.5"
+                      initial={{opacity:0}} animate={{opacity:0.5}} transition={{delay:1.5, duration:0.3}}/>
+                    <motion.line x1="384" y1="150" x2="384" y2="166" stroke="#d4a017" strokeWidth="2" opacity="0.5"
+                      initial={{opacity:0}} animate={{opacity:0.5}} transition={{delay:1.5, duration:0.3}}/>
+                    <motion.rect x="248" y="248" width="24" height="24" fill="#d4a017" opacity="0.14"
+                      transform="rotate(45 260 260)"
+                      initial={{scale:0, opacity:0}} animate={{scale:1, opacity:0.14}}
+                      transition={{delay:1.38, duration:0.5, ease:[0.34,1.56,0.64,1]}}/>
+                    <motion.rect x="252" y="252" width="16" height="16" fill="none" stroke="#d4a017" strokeWidth="1.8" opacity="0.65"
+                      transform="rotate(45 260 260)"
+                      initial={{scale:0, opacity:0}} animate={{scale:1, opacity:0.65}}
+                      transition={{delay:1.52, duration:0.5, ease:[0.34,1.56,0.64,1]}}/>
+                  </svg>
+
+                  <motion.div
+                    initial={{opacity:0, scale:0.88}} animate={{opacity:1, scale:1}}
+                    transition={{duration:1.3, delay:0.45, ease:[0.16,1,0.3,1]}}
+                    style={{position:'absolute', top:'0%', left:'0%', transform:'translate(-50%,-50%)', zIndex:5}}
+                  >
+                    <div style={{position:'absolute', inset:'40px', borderRadius:'50%',
+                      background:'radial-gradient(ellipse 58% 55% at 50% 54%, rgba(212,160,23,0.09) 0%, transparent 68%)'}}/>
+                    <img
+                      src="/assets/mark_light.png"
+                      alt="Bramhaas Tech"
+                      style={{
+                        width: '500px',
+                        height: '500px',
+                        objectFit: 'contain',
+                        mixBlendMode: 'multiply',
+                        opacity: 0.93,
+                        display: 'block',
+                        position: 'relative',
+                        zIndex: 1,
+                        marginTop: '-50px' // adjust as needed
+                      }}
+                    />
+                                      </motion.div>
+
+                  {[
+                    {x:257, y:36,  r:3,   delay:1.55, op:0.5},
+                    {x:257, y:472, r:2,   delay:1.75, op:0.3},
+                    {x:488, y:255, r:2.5, delay:1.65, op:0.4},
+                    {x:10,  y:248, r:1.8, delay:1.85, op:0.22},
+                    {x:404, y:82,  r:2,   delay:1.95, op:0.32},
+                    {x:82,  y:392, r:1.5, delay:2.05, op:0.2},
+                  ].map((p, i) => (
+                    <motion.div key={i}
+                      initial={{opacity:0, scale:0}} animate={{opacity:p.op, scale:1}}
+                      transition={{delay:p.delay, duration:0.4, ease:[0.34,1.56,0.64,1]}}
+                      style={{position:'absolute', left:p.x-p.r, top:p.y-p.r, width:p.r*2, height:p.r*2, borderRadius:'50%', background:'#d4a017'}}
+                    />
+                  ))}
+                </div>
               </motion.div>
             </div>
           </div>
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-            <span className="text-[8px] tracking-[4px] text-[#ccc] uppercase">Scroll</span>
-            <motion.div animate={{y:[0,6,0]}} transition={{repeat:Infinity,duration:1.8,ease:'easeInOut'}}
-              className="w-[1px] h-8 bg-gradient-to-b from-[#d4a017] to-transparent"/>
-          </div>
+
+          {/* Scroll indicator */}
+          <motion.div
+            initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.85, duration:0.8}}
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          >
+            <span className="text-[7.5px] tracking-[4px] text-[#ccc] uppercase">Scroll</span>
+            <motion.div
+              animate={{y:[0,7,0], opacity:[0.6,1,0.6]}}
+              transition={{repeat:Infinity, duration:2, ease:'easeInOut'}}
+              className="w-[1px] h-7 bg-gradient-to-b from-[#d4a017] to-transparent"
+            />
+          </motion.div>
         </section>
 
         {/* DOMAIN STRIP */}
