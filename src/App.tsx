@@ -132,11 +132,24 @@ const IconRigorous = () => (
   </svg>
 );
 
+const IconIoT = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="16" cy="16" r="3.5" stroke="currentColor" strokeWidth="1.5"/>
+    <circle cx="16" cy="16" r="7" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2"/>
+    <path d="M8.5 8.5 C5 11 5 21 8.5 23.5" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+    <path d="M23.5 8.5 C27 11 27 21 23.5 23.5" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+    <path d="M11 5.5 C6 8.5 6 23.5 11 26.5" stroke="currentColor" strokeWidth="1" fill="none" strokeLinecap="round" opacity="0.5"/>
+    <path d="M21 5.5 C26 8.5 26 23.5 21 26.5" stroke="currentColor" strokeWidth="1" fill="none" strokeLinecap="round" opacity="0.5"/>
+    <circle cx="16" cy="16" r="1.5" fill="currentColor"/>
+  </svg>
+);
+
+
 const SERVICES = [
-  { title:"Embedded Systems", description:"Rigorous firmware development and hardware-software integration for specialized IoT and industrial deployments.", icon:<IconEmbedded/>, features:["RTOS Implementation","Bare Metal Dev","FPGA Integration","System Security"] },
+  { title:"Embedded Systems & IoT", description:"Rigorous firmware development, hardware-software integration and end-to-end IoT solutions for industrial and connected deployments.", icon:<IconEmbedded/>, features:["RTOS Implementation","Bare Metal Dev","FPGA Integration","IoT Connectivity"] },
   { title:"Hardware Design", description:"Technical PCB engineering for high-performance systems requiring extreme reliability and efficiency.", icon:<IconHardware/>, features:["High-Speed Design","Design for Mfg","Power Mgmt","EMI Shielding"] },
   { title:"High Performance Computing", description:"Designing and optimising systems that operate at the limits of computational capability. Real HPC experience, not theory.", icon:<IconHPC/>, features:["HPC Architecture","System Tuning","Precision Benchmarking","Performance Analysis"] },
-  { title:"AI, ML & Data Science", description:"Building intelligent systems and transforming complex data into decisions. From edge models to executive dashboards.", icon:<IconAI/>, features:["Edge Intelligence","Model Optimization","Predictive Analytics","Reports & Dashboards"] },
+  { title:"AI & ML", description:"Building intelligent systems that learn, adapt and decide. From edge inference to production model deployment.", icon:<IconAI/>, features:["Edge Intelligence","Model Optimization","Neural Architectures","MLOps & Deployment"] },
   { title:"IT Engineering", description:"Engineering the infrastructure that organisations depend on. Security, resilience, scale.", icon:<IconIT/>, features:["Secure Cloud","Network Ops","Infrastructure","DevOps Systems"] }
 ];
 
@@ -547,7 +560,7 @@ export default function App() {
         <div className="bg-[#1a0d2e] py-5 overflow-hidden">
           <div className="flex gap-16 animate-[marquee_18s_linear_infinite] whitespace-nowrap">
             {[...Array(3)].map((_, i) =>
-              ['EMBEDDED SYSTEMS','AI · ML · DATA SCIENCE','HARDWARE DESIGN','IT ENGINEERING','HPC','BRAMHAAS TECH · PUNE'].map(t => (
+              ['EMBEDDED SYSTEMS & IOT','AI · ML','HARDWARE DESIGN','IT ENGINEERING','HPC','BRAMHAAS TECH · PUNE'].map(t => (
                 <span key={`${i}-${t}`} className="text-[10px] font-bold tracking-[4px] text-[#d4a017] uppercase flex-shrink-0">
                   {t} <span className="text-[#3a2a5a] mx-6">·</span>
                 </span>
@@ -856,8 +869,8 @@ export default function App() {
                         <div>
                           <label className="text-[9px] font-bold tracking-[3px] uppercase text-[#94a3b8] block mb-2">Area of Work</label>
                           <select name="domain" className="w-full bg-transparent border-b border-[#d8d4e0] py-3 text-[14px] text-[#0f172a] outline-none focus:border-[#d4a017] transition-colors appearance-none">
-                            <option>Embedded Systems</option>
-                            <option>AI / ML & Data Science</option>
+                            <option>Embedded Systems & IoT</option>
+                            <option>AI / ML</option>
                             <option>Hardware Design</option>
                             <option>IT Engineering</option>
                             <option>High Performance Computing</option>
@@ -903,7 +916,7 @@ export default function App() {
             <div>
               <h4 className="text-[9px] font-bold tracking-[4px] text-[#d4a017] uppercase mb-7">Engineering</h4>
               <ul className="space-y-4">
-                {['Embedded Systems','AI, ML & Data Science','Hardware Design','IT Engineering','High Performance Computing'].map(item => (
+                {['Embedded Systems & IoT','AI & ML','Hardware Design','IT Engineering','High Performance Computing'].map(item => (
                   <li key={item}><a href="#services" className="text-[12px] text-white/40 hover:text-white transition-colors font-light">{item}</a></li>
                 ))}
               </ul>
